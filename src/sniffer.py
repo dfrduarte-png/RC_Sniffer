@@ -1,4 +1,8 @@
+from struct import pack
 from scapy.all import PacketList, sniff
+from datetime import datetime
+
+from packets import print_packets
 
 class Sniffer:
     def __init__(self):
@@ -39,8 +43,9 @@ class Sniffer:
     def valid_interface(self) -> bool:
         return self.interface != ""
 
-    def sniff_packets(self) -> PacketList:
-        return sniff(iface=self.interface, filter=self.filter, count=self.count, prn=lambda x: x.summary()) 
+    def sniff_packets(self):
+        packets = sniff(iface=self.interface, filter=self.filter, count=self.count) 
+        print_packets(packets)
 
 
         
