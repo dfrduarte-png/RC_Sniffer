@@ -21,19 +21,19 @@ def select_if(sniffer: Sniffer):
     ans = input("Select the desired interface:\n>")
     try:
         ans = int(ans) - 1
+        sniffer.interface = ifs[ans]
+        print(f"Selected interface: {sniffer.interface}")
     except Exception as e:
         print("[ERROR] Invalid option.")
+        return
 
-    sniffer.interface = ifs[ans]
-    print(f"Selected interface: {sniffer.interface}")
-    
 def sniffer_sniff(sniffer: Sniffer):
     if not sniffer.valid_interface():
         print("[ERROR] Sniffer's set interface is invalid. PLease set it up correctly")
         return
 
     filter = input("Input a filter (ENTER for no filter):\n> ")
-    count = input("Input how many packets to capture (ENTER for deafult 10):\n> ")
+    count = input("Input how many packets to capture (ENTER for default 10):\n> ")
 
     sniffer.filter = filter
     if count.strip() != "":
@@ -65,14 +65,7 @@ def main():
             case 2:
                 sniffer_sniff(sniffer)
             case 3:
-                run = False;
-
-
-
-
-    
-
-    
+                run = False; 
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,7 @@
 from struct import pack
+import scapy
 from scapy.all import PacketList, sniff
+from scapy.error import Scapy_Exception
 from datetime import datetime
 
 from packets import print_packets
@@ -44,8 +46,11 @@ class Sniffer:
         return self.interface != ""
 
     def sniff_packets(self):
-        packets = sniff(iface=self.interface, filter=self.filter, count=self.count) 
-        print_packets(packets)
+        try:
+            packets = sniff(iface=self.interface, filter=self.filter, count=self.count) 
+            print_packets(packets)
+        except Scapy_Exception as e:
+            print(f"[ERROR] {e}")
 
 
         
