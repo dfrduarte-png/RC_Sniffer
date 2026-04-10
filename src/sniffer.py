@@ -1,10 +1,5 @@
-from struct import pack
-import scapy
 from scapy.all import PacketList, sniff
 from scapy.error import Scapy_Exception
-from datetime import datetime
-
-from packets import print_packets
 
 class Sniffer:
     def __init__(self):
@@ -45,12 +40,10 @@ class Sniffer:
     def valid_interface(self) -> bool:
         return self.interface != ""
 
-    def sniff_packets(self):
+    def sniff_packets(self) -> PacketList:
+        """Captures packets and returns them. Does not print."""
         try:
-            packets = sniff(iface=self.interface, filter=self.filter, count=self.count) 
-            print_packets(packets)
+            return sniff(iface=self.interface, filter=self.filter, count=self.count) 
         except Scapy_Exception as e:
-            print(f"[ERROR] {e}")
-
-
-        
+            # Re-raise to let the UI handle the error display
+            raise e
